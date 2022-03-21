@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.hm.cs.katz</groupId>
+	<artifactId>swe2-assignment-01</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+
+	<packaging>jar</packaging>
+
+	<name>Java-Projekt für Aufgabenblatt 1</name>
+	<description>Java-Projekt für Aufgabenblatt 1</description>
+
+
+	<properties>
+		<source.encoding>UTF-8</source.encoding>
+		<project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
+		<commons-lang.version>3.8.1</commons-lang.version>
+		<junit.version>5.4.0</junit.version>
+		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+	</properties>
+
+	<dependencies>
+		<!-- Diese Abhaengigkeiten werden zum Testen benoetigt. -->
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>hashbreaker</finalName>
+		<resources>
+			<resource>
+				<directory>etc</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>edu.hm.cs.katz.swe2.breaker.HashBreakerApplication</mainClass>
+						</transformer>
+					</transformers>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>10</source>
+						<target>10</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${maven-site-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<excludes>**/Aufgabe7OptionalTest.java</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>${maven-checkstyle-plugin.version}</version>
+					<dependencies>
+						<dependency>
+							<groupId>com.puppycrawl.tools</groupId>
+							<artifactId>checkstyle</artifactId>
+							<version>8.18</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.bcel</groupId>
+							<artifactId>bcel</artifactId>
+							<version>6.0</version>
+						</dependency>
+
+					</dependencies>
+					<configuration>
+						<configLocation>etc/swe2-checkstyle-configuration.xml</configLocation>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<reporting>
+
+	</reporting>
+
+</project>
